@@ -1,6 +1,8 @@
 # react-spinner-material
 A simple react component made using canvas and window frame animations. Very close in resemblance to that of the Spinner or Android or the loading spinner on YouTube.
 
+![Example of Spinner](https://raw.githubusercontent.com/icarus-sullivan/react-spinner-material/master/example.gif)
+
 _Installation:_
 ```
 npm install react-spinner-material
