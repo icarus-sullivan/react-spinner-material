@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 const STEP = 0.1;
 const ROTATION_STEP = 3 * Math.PI / 180;
@@ -24,27 +24,18 @@ let spinnerColor = DEFAULT_SPINNER_COLOR;
 let spinnerWidth = DEFAULT_SPINNER_WIDTH;
 
 class Spinner extends Component {
-  static propType = {
-    // the width of the canvas
-    width: PropTypes.number,
-    // the height of the canvas
-    height: PropTypes.number,
-    // whether to display the spinner or not
-    show: PropTypes.boolean,
-    // the color of the spinner's stroke
-    spinnerColor: PropTypes.string,
-    // the width of the spinners stroke
-    spinnerWidth: PropTypes.string
-  }
-
-  constructor(props) {
-    super(props);
-
+  componentDidMount() {
+    animate = true;
     width = this.props.width || DEFAULT_DIMENSIONS;
     height = this.props.height || DEFAULT_DIMENSIONS;
     radius = Math.min(width / 2, height / 2) * RADIUS_PERCENT;
     spinnerColor = this.props.spinnerColor || DEFAULT_SPINNER_COLOR;
     spinnerWidth = this.props.spinnerWidth || DEFAULT_SPINNER_WIDTH;
+    window.requestAnimationFrame(this.update.bind(this));
+  }
+
+  componentWillUnmount() {
+    animate = false;
   }
 
   render() {
@@ -53,15 +44,6 @@ class Spinner extends Component {
         Your browser does not support HTML5 canvas elements.
       </canvas>
     ) : null;
-  }
-
-  componentDidMount() {
-    animate = true;
-    window.requestAnimationFrame(this.update.bind(this));
-  }
-
-  componentWillUnmount() {
-    animate = false;
   }
 
   update() {
