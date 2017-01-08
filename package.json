@@ -1,6 +1,6 @@
 {
   "name": "react-spinner-material",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple react component made using canvas and window frame animations",
   "main": "lib/index.js",
   "scripts": {
