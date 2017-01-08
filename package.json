@@ -1,0 +1,25 @@
+{
+  "name": "react-spinner-material",
+  "version": "1.0.0",
+  "description": "A simple react component made using canvas and window frame animations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "spinner",
+    "material",
+    "design",
+    "canvas",
+    "solid"
+  ],
+  "author": "Chris Sullivan",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.1"
+  },
+  "dependencies": {
+    "babel": "^6.5.2"
+  }
+}
