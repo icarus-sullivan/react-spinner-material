@@ -31,6 +31,8 @@ show = this.props.show
 ### Usage
 Here is the most simple example of using the react-spinner-material.
 
+_**Please note, the spinner is not visible by default, you must set show={true} for it to show up!!**_
+
 ```
 import Spinner from 'react-spinner-material';
 import React, { Component } from 'react';

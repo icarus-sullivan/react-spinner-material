@@ -1,7 +1,7 @@
 {
   "name": "react-spinner-material",
   "version": "1.0.2",
-  "description": "A simple react component made using canvas and window frame animations",
+  "description": "A flashy material-design inspired spinner.",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel --presets react -d lib/ src/"
