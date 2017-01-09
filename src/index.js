@@ -24,6 +24,12 @@ let spinnerColor = DEFAULT_SPINNER_COLOR;
 let spinnerWidth = DEFAULT_SPINNER_WIDTH;
 
 class Spinner extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false
+    }
+  }
 
   /**
    * Call this in case our show proptype changes, this is a hack as
@@ -32,7 +38,7 @@ class Spinner extends Component {
    *
    */
   componentWillReceiveProps(nextProps) {
-    if( !nextProps.show )
+    if( !this.props.show )
     {
       this.stop();
     }
@@ -40,7 +46,9 @@ class Spinner extends Component {
       this.start();
     }
 
-    this.forceUpdate();
+    this.setState({
+      show: this.props.show
+    });
   }
 
   /**
@@ -61,7 +69,7 @@ class Spinner extends Component {
   }
 
   render() {
-    return this.props.show ? (
+    return this.state.show ? (
       <canvas id='spinner' width={width} height={height}>
         Your browser does not support HTML5 canvas elements.
       </canvas>
