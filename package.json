@@ -1,6 +1,6 @@
 {
   "name": "react-spinner-material",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A flashy material-design inspired spinner.",
   "main": "lib/index.js",
   "scripts": {

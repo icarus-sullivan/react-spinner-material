@@ -24,18 +24,38 @@ let spinnerColor = DEFAULT_SPINNER_COLOR;
 let spinnerWidth = DEFAULT_SPINNER_WIDTH;
 
 class Spinner extends Component {
-  componentDidMount() {
-    animate = true;
-    width = this.props.width || DEFAULT_DIMENSIONS;
-    height = this.props.height || DEFAULT_DIMENSIONS;
-    radius = Math.min(width / 2, height / 2) * RADIUS_PERCENT;
-    spinnerColor = this.props.spinnerColor || DEFAULT_SPINNER_COLOR;
-    spinnerWidth = this.props.spinnerWidth || DEFAULT_SPINNER_WIDTH;
-    window.requestAnimationFrame(this.update.bind(this));
+
+  /**
+   * Call this in case our show proptype changes, this is a hack as
+   * componentWillMount may have already been called prior to new props
+   * being passed in.
+   *
+   */
+  componentWillReceiveProps(nextProps) {
+    if( !nextProps.show )
+    {
+      this.stop();
+    }
+    else {
+      this.start();
+    }
   }
 
+  /**
+   * Assuming all desired props are passed start the animation.
+   *
+   */
+  componentDidMount() {
+    this.start();
+  }
+
+  /**
+   * If this component is going away, we don't want to keep registering for
+   * animation keyframes and slow down everything else.
+   *
+   */
   componentWillUnmount() {
-    animate = false;
+    this.stop();
   }
 
   render() {
@@ -46,6 +66,35 @@ class Spinner extends Component {
     ) : null;
   }
 
+  /**
+   * Begin the animation, we want to offload logic for some variables
+   * like the width, height, radius and other modifiable props.
+   *
+   */
+  start() {
+    animate = true;
+    width = this.props.width || DEFAULT_DIMENSIONS;
+    height = this.props.height || DEFAULT_DIMENSIONS;
+    radius = Math.min(width / 2, height / 2) * RADIUS_PERCENT;
+    spinnerColor = this.props.spinnerColor || DEFAULT_SPINNER_COLOR;
+    spinnerWidth = this.props.spinnerWidth || DEFAULT_SPINNER_WIDTH;
+    window.requestAnimationFrame(this.update.bind(this));
+  }
+
+  /**
+   * Let the animation know not to request the next animation frame
+   *
+   */
+  stop() {
+    animate = false;
+  }
+
+  /**
+   * Our animation loop, once endAngle reaches the startAngle, move the startAngle
+   * while at the same time incrementally adjust our rotation to have a fully
+   * animated spinner effect.
+   *
+   */
   update() {
     var c = document.getElementById('spinner');
     var ctx = c.getContext('2d');
