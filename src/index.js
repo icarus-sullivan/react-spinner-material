@@ -26,9 +26,6 @@ let spinnerWidth = DEFAULT_SPINNER_WIDTH;
 class Spinner extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      show: false
-    }
   }
 
   /**
@@ -45,10 +42,6 @@ class Spinner extends Component {
     else {
       this.start();
     }
-
-    this.setState({
-      show: this.props.show
-    });
   }
 
   /**
@@ -69,11 +62,9 @@ class Spinner extends Component {
   }
 
   render() {
-    return this.state.show ? (
-      <canvas id='spinner' width={width} height={height}>
-        Your browser does not support HTML5 canvas elements.
-      </canvas>
-    ) : null;
+    return (<canvas id='spinner' width={width} height={height}>
+      Your browser does not support HTML5 canvas elements.
+    </canvas>);
   }
 
   /**
@@ -109,6 +100,9 @@ class Spinner extends Component {
     var c = document.getElementById('spinner');
     var ctx = c.getContext('2d');
     ctx.clearRect(0, 0, width, height);
+
+    if( !animate ) return;
+
     ctx.beginPath();
 
     ctx.arc(width / 2, height / 2, radius, rotation + startAngle, rotation + endAngle);
@@ -135,9 +129,7 @@ class Spinner extends Component {
     		moveStart = true;
     }
 
-    if( animate ) {
-      window.requestAnimationFrame(this.update.bind(this));
-    }
+    window.requestAnimationFrame(this.update.bind(this));
   }
 
 }
