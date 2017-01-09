@@ -29,50 +29,11 @@ class Spinner extends Component {
   }
 
   /**
-   * Call this in case our show proptype changes, this is a hack as
-   * componentWillMount may have already been called prior to new props
-   * being passed in.
-   *
-   */
-  componentWillReceiveProps(nextProps) {
-    if( !this.props.show )
-    {
-      this.stop();
-    }
-    else {
-      this.start();
-    }
-  }
-
-  /**
-   * Assuming all desired props are passed start the animation.
-   *
-   */
-  componentDidMount() {
-    this.start();
-  }
-
-  /**
-   * If this component is going away, we don't want to keep registering for
-   * animation keyframes and slow down everything else.
-   *
-   */
-  componentWillUnmount() {
-    this.stop();
-  }
-
-  render() {
-    return (<canvas id='spinner' width={width} height={height}>
-      Your browser does not support HTML5 canvas elements.
-    </canvas>);
-  }
-
-  /**
    * Begin the animation, we want to offload logic for some variables
    * like the width, height, radius and other modifiable props.
    *
    */
-  start() {
+  componentDidMount() {
     animate = true;
     width = this.props.width || DEFAULT_DIMENSIONS;
     height = this.props.height || DEFAULT_DIMENSIONS;
@@ -83,11 +44,20 @@ class Spinner extends Component {
   }
 
   /**
-   * Let the animation know not to request the next animation frame
+   * If this component is going away, we don't want to keep registering for
+   * animation keyframes and slow down everything else.
    *
    */
-  stop() {
+  componentWillUnmount() {
     animate = false;
+  }
+
+  render() {
+    return (<canvas id='spinner'
+      style={{ opacity: this.props.show ? 1 : 0 }}
+      width={width} height={height}>
+      Your browser does not support HTML5 canvas elements.
+    </canvas>);
   }
 
   /**
