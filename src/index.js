@@ -38,8 +38,9 @@ class Spinner extends Component {
     }
     else {
       this.start();
-      this.forceUpdate();
     }
+
+    this.forceUpdate();
   }
 
   /**
