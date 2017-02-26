@@ -68,6 +68,8 @@ class Spinner extends Component {
    */
   update() {
     var c = document.getElementById('spinner');
+    if (!c) return;
+    
     var ctx = c.getContext('2d');
     ctx.clearRect(0, 0, width, height);
 
