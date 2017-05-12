@@ -20,7 +20,7 @@
     "solid"
   ],
   "author": "Chris Sullivan",
-  "license": "Apache-2.0",
+  "license": "Unlicense",
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.1"
   },
