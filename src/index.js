@@ -33,7 +33,7 @@ class Spinner extends Component {
    * like the width, height, radius and other modifiable props.
    *
    */
-  componentDidMount() {
+  componentWillMount() {
     animate = true;
     width = this.props.width || DEFAULT_DIMENSIONS;
     height = this.props.height || DEFAULT_DIMENSIONS;
