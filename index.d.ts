@@ -6,5 +6,5 @@ declare module "react-spinner-material" {
         spinnerWidth?: number;
         show?: boolean;
     }
-    export default class Spinner extends React.Component<SpinnerProps, void> {}
+    export default class Spinner extends React.Component<SpinnerProps, {}> {}
 }
