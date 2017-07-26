@@ -1,10 +1,9 @@
 declare module "react-spinner-material" {
     export interface SpinnerProps {
-        width?: number;
-        height?: number;
+        size?: number;
         spinnerColor?: string;
         spinnerWidth?: number;
-        show?: boolean;
+        visible?: boolean;
     }
-    export default class Spinner extends React.Component<SpinnerProps, void> {}
+    export default class Spinner extends React.Component<SpinnerProps, {}> {}
 }

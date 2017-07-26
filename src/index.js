@@ -1,109 +1,98 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
 
-const STEP = 0.1;
-const ROTATION_STEP = 3 * Math.PI / 180;
-const FULL_PI = 2 * Math.PI;
-const HALF_PI = 0.5 * Math.PI;
+const FPS = 1 / 25;
 const RADIUS_PERCENT = 0.8;
-const DEFAULT_SPINNER_COLOR = '#ffffff';
-const DEFAULT_SPINNER_WIDTH = 5;
-const DEFAULT_DIMENSIONS = 40;
 
-// upate values
-let startAngle = 0;
-let endAngle = 0;
-let rotation = -HALF_PI;
-let moveStart = false;
-let radius = 15;
-let animate = false;
+const clamp = (min, max, val) => {
+  if( min > val ) return min;
+  if( max < val ) return max;
+  return val;
+}
 
-// valid props -- checked later and defaulted here
-let width = DEFAULT_DIMENSIONS;
-let height = DEFAULT_DIMENSIONS;
-let spinnerColor = DEFAULT_SPINNER_COLOR;
-let spinnerWidth = DEFAULT_SPINNER_WIDTH;
+export default class Spinner extends Component {
 
-class Spinner extends Component {
+  static propTypes = {
+    size: PropTypes.number,
+    spinnerColor: PropTypes.string,
+    spinnerWidth: PropTypes.number,
+    visible: PropTypes.bool
+  };
+
+  static defaultProps = {
+    size: 40,
+    spinnerColor: '#333333',
+    spinnerWidth: 5,
+    visible: true,
+  }
+
   constructor(props) {
     super(props);
+
+    // legacy support for width, height
+    const { size, width, height } = this.props;
+
+    this.start = 0;
+    this.end = Math.PI;
+    this.flip = 1;
+    this.size = size ? size : Math.min(width, height);
+
+    this.state = {
+      animate: false,
+      running: false
+    }
+
+    this.update = this.update.bind(this);
   }
 
-  /**
-   * Begin the animation, we want to offload logic for some variables
-   * like the width, height, radius and other modifiable props.
-   *
-   */
   componentWillMount() {
-    animate = true;
-    width = this.props.width || DEFAULT_DIMENSIONS;
-    height = this.props.height || DEFAULT_DIMENSIONS;
-    radius = Math.min(width / 2, height / 2) * RADIUS_PERCENT;
-    spinnerColor = this.props.spinnerColor || DEFAULT_SPINNER_COLOR;
-    spinnerWidth = this.props.spinnerWidth || DEFAULT_SPINNER_WIDTH;
-    window.requestAnimationFrame(this.update.bind(this));
+    this.setState({ animate: true });
+    window.requestAnimationFrame(this.update);
   }
 
-  /**
-   * If this component is going away, we don't want to keep registering for
-   * animation keyframes and slow down everything else.
-   *
-   */
   componentWillUnmount() {
-    animate = false;
+    this.setState({ animate: false });
   }
 
-  render() {
-    return (<canvas id='spinner'
-      style={{ opacity: this.props.show ? 1 : 0 }}
-      width={width} height={height}>
-      Your browser does not support HTML5 canvas elements.
-    </canvas>);
-  }
-
-  /**
-   * Our animation loop, once endAngle reaches the startAngle, move the startAngle
-   * while at the same time incrementally adjust our rotation to have a fully
-   * animated spinner effect.
-   *
-   */
   update() {
-    var c = document.getElementById('spinner');
-    if (!c) return;
-    
+    const { animate } = this.state;
+    const { spinnerColor, spinnerWidth } = this.props;
+    const c = ReactDOM.findDOMNode(this.refs.spinner);
+    if (!c || !animate ) return;
+
+    if( this.start >= Math.PI || this.start < 0 ) {
+      this.flip *= -1;
+    }
+
+    let step = FPS * this.flip;
+    this.start = clamp(-Math.PI, Math.PI, this.start + step);
+    this.end = clamp(Math.PI, 2 * Math.PI, this.end - step);
+
     var ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, width, height);
-
-    if( !animate ) return;
-
+    ctx.clearRect(0, 0, this.size, this.size);
     ctx.beginPath();
-
-    ctx.arc(width / 2, height / 2, radius, rotation + startAngle, rotation + endAngle);
+    ctx.arc(this.size / 2, this.size / 2, (this.size / 2) * RADIUS_PERCENT, this.start, this.end);
     ctx.strokeStyle = spinnerColor;
     ctx.lineWidth = spinnerWidth;
     ctx.stroke();
 
-    rotation += ROTATION_STEP;
-    if (rotation >= FULL_PI) {
-      rotation = 0;
-    }
+    window.requestAnimationFrame(this.update);
+  }
 
-    if (moveStart) {
-      startAngle += STEP;
-    } else {
-      endAngle += STEP;
-    }
+  render() {
+    // legacy support for show
+    const { visible, show } = this.props;
 
-   	if (endAngle < startAngle) {
-      moveStart = false;
-      endAngle = 0;
-      startAngle = 0;
-    } else if (endAngle >= FULL_PI) {
-    		moveStart = true;
-    }
-
-    window.requestAnimationFrame(this.update.bind(this));
+    return (
+      <canvas
+        ref="spinner"
+        className="spinner"
+        style={{ display: visible || show ? 'block' : 'none' }}
+        width={this.size} height={this.size}>
+        Your browser does not support HTML5 canvas elements.
+      </canvas>
+    );
   }
 
 }
-
-export default Spinner;

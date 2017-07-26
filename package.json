@@ -1,9 +1,10 @@
 {
   "name": "react-spinner-material",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A flashy material-design inspired spinner.",
   "main": "lib/index.js",
   "scripts": {
+    "render": "webpack webpack.config.js ; webpack-dev-server --content-base render/",
     "build": "babel --presets react -d lib/ src/",
     "prepublish": "npm run build"
   },
@@ -22,12 +23,16 @@
   "author": "Chris Sullivan",
   "license": "Unlicense",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.1"
+    "react": "^15.6.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-1": "^6.13.0"
+    "css-loader": "^0.28.4",
+    "style-loader": "^0.18.2",
+    "webpack-dev-server": "^2.6.1"
   }
 }

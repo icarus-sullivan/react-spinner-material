@@ -12,26 +12,14 @@ npm install react-spinner-material
 ### PropTypes
 Here's a full list of currently supported propTypes for use in the component.
 ```
-// the width of the canvas to draw on
-width = this.props.width
-
-// the height of the canvas to draw on
-height = this.props.height
-
-// the spinner stroke color
-spinnerColor = this.props.spinnerColor
-
-// the width of the line stroke
-spinnerWidth = this.props.spinnerWidth
-
-// whether to show the spinner or not
-show = this.props.show
+size: maps to width and height of the spinner
+spinnerColor: the color of the spinner
+spinnerWidth: the stroke width of the spinner
+visible: to show the spinner or not
 ```
 
 ### Usage
 Here is the most simple example of using the react-spinner-material.
-
-_**Please note, the spinner is not visible by default, you must set show={true} for it to show up!!**_
 
 ```
 import Spinner from 'react-spinner-material';
@@ -41,11 +29,11 @@ export default = class Example extends Component {
   render() {
   return (
       <div>
-       <Spinner width={100}
-        height={120}
+       <Spinner
+        size={120}
         spinnerColor={"#333"}
         spinnerWidth={2}
-        show={true} />
+        visible={true} />
       </div>
     );
   }
