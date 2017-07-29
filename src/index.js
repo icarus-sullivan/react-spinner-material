@@ -1,15 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { inject, clamp } from './utils';
 
 const FPS = 1 / 25;
 const RADIUS_PERCENT = 0.8;
 
-const clamp = (min, max, val) => {
-  if( min > val ) return min;
-  if( max < val ) return max;
-  return val;
-}
+inject();  // inject style into html
 
 export default class Spinner extends Component {
 

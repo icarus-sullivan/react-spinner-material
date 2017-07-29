@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Spinner from './src';
+import Spinner from './lib';
 
 class Render extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: true
     };
   }
 
