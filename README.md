@@ -40,6 +40,3 @@ export default = class Example extends Component {
 }
 ```
 
-### Demo
-
-[View here](http://htmlpreview.github.io/?https://github.com/icarus-sullivan/react-spinner-material/blob/master/render/index.html)
