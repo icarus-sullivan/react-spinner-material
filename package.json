@@ -4,10 +4,9 @@
   "description": "A flashy material-design inspired spinner.",
   "main": "lib/index.js",
   "scripts": {
-    "render": "webpack webpack.config.js ; webpack-dev-server --content-base render/",
-    "compile": "webpack --config webpack.build.js",
-    "build": "babel --presets react -d lib/ src/ --copy-files",
-    "prepublish": "npm run build"
+    "render": "webpack webpack.render.js ; webpack-dev-server --content-base render/",
+    "compile": "webpack --config webpack.compile.js",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",

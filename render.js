@@ -11,11 +11,13 @@ class Render extends React.Component {
   }
 
   render() {
+    const { show } = this.state;
     return (
-      <div style={{ flex: 1 }}>
-        <h1>Render Test</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <h1>Demo</h1>
         <Spinner animate={true} spinnerColor="#336699" visible={this.state.show} spinnerWidth={7} size={80}/>
-        <div onClick={() => { this.setState({show: !this.state.show}) }}>Toggle</div>
+        <div style={{ height: 10 }}/>
+        <div onClick={() => { this.setState({show: !show}) }}>{show ? 'Hide' : 'Show'}</div>
       </div>
     )
   }

@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(3);
-	module.exports = __webpack_require__(187);
+	module.exports = __webpack_require__(192);
 
 
 /***/ },
@@ -241,6 +241,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(4);
@@ -251,9 +255,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _src = __webpack_require__(187);
-
-	var _src2 = _interopRequireDefault(_src);
+	__webpack_require__(187);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -263,49 +265,121 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Render = function (_React$Component) {
-	  _inherits(Render, _React$Component);
+	var FPS = 1 / 25;
+	var RADIUS_PERCENT = 0.8;
 
-	  function Render(props) {
-	    _classCallCheck(this, Render);
+	var clamp = function clamp(min, max, val) {
+	  if (min > val) return min;
+	  if (max < val) return max;
+	  return val;
+	};
 
-	    var _this = _possibleConstructorReturn(this, (Render.__proto__ || Object.getPrototypeOf(Render)).call(this, props));
+	var Spinner = function (_Component) {
+	  _inherits(Spinner, _Component);
+
+	  function Spinner(props) {
+	    _classCallCheck(this, Spinner);
+
+	    // legacy support for width, height
+	    var _this = _possibleConstructorReturn(this, (Spinner.__proto__ || Object.getPrototypeOf(Spinner)).call(this, props));
+
+	    var _this$props = _this.props,
+	        size = _this$props.size,
+	        width = _this$props.width,
+	        height = _this$props.height;
+
+
+	    _this.start = 0;
+	    _this.end = Math.PI;
+	    _this.flip = 1;
+	    _this.size = size ? size : Math.min(width, height);
 
 	    _this.state = {
-	      show: false
+	      animate: false,
+	      running: false
 	    };
+
+	    _this.update = _this.update.bind(_this);
 	    return _this;
 	  }
 
-	  _createClass(Render, [{
+	  _createClass(Spinner, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.setState({ animate: true });
+	      window.requestAnimationFrame(this.update);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.setState({ animate: false });
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	      var animate = this.state.animate;
+	      var _props = this.props,
+	          spinnerColor = _props.spinnerColor,
+	          spinnerWidth = _props.spinnerWidth;
+
+	      var c = _reactDom2.default.findDOMNode(this.refs.spinner);
+	      if (!c || !animate) return;
+
+	      if (this.start >= Math.PI || this.start < 0) {
+	        this.flip *= -1;
+	      }
+
+	      var step = FPS * this.flip;
+	      this.start = clamp(-Math.PI, Math.PI, this.start + step);
+	      this.end = clamp(Math.PI, 2 * Math.PI, this.end - step);
+
+	      var ctx = c.getContext('2d');
+	      ctx.clearRect(0, 0, this.size, this.size);
+	      ctx.beginPath();
+	      ctx.arc(this.size / 2, this.size / 2, this.size / 2 * RADIUS_PERCENT, this.start, this.end);
+	      ctx.strokeStyle = spinnerColor;
+	      ctx.lineWidth = spinnerWidth;
+	      ctx.stroke();
+
+	      window.requestAnimationFrame(this.update);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      // legacy support for show
+	      var _props2 = this.props,
+	          visible = _props2.visible,
+	          show = _props2.show;
+
 
 	      return _react2.default.createElement(
-	        'div',
-	        { style: { flex: 1 } },
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Render Test'
-	        ),
-	        _react2.default.createElement(_src2.default, { animate: true, spinnerColor: '#336699', visible: this.state.show, spinnerWidth: 7, size: 80 }),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: function onClick() {
-	              _this2.setState({ show: !_this2.state.show });
-	            } },
-	          'Toggle'
-	        )
+	        'canvas',
+	        {
+	          ref: 'spinner',
+	          className: 'spinner',
+	          style: { display: visible || show ? 'block' : 'none' },
+	          width: this.size, height: this.size },
+	        'Your browser does not support HTML5 canvas elements.'
 	      );
 	    }
 	  }]);
 
-	  return Render;
-	}(_react2.default.Component);
+	  return Spinner;
+	}(_react.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(Render, null), document.getElementById("root"));
+	Spinner.propTypes = {
+	  size: _react.PropTypes.number,
+	  spinnerColor: _react.PropTypes.string,
+	  spinnerWidth: _react.PropTypes.number,
+	  visible: _react.PropTypes.bool
+	};
+	Spinner.defaultProps = {
+	  size: 40,
+	  spinnerColor: '#333333',
+	  spinnerWidth: 5,
+	  visible: true
+	};
+	exports.default = Spinner;
 
 /***/ },
 /* 4 */
@@ -22334,156 +22408,10 @@
 /* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(4);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(40);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	__webpack_require__(188);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var FPS = 1 / 25;
-	var RADIUS_PERCENT = 0.8;
-
-	var clamp = function clamp(min, max, val) {
-	  if (min > val) return min;
-	  if (max < val) return max;
-	  return val;
-	};
-
-	var Spinner = function (_Component) {
-	  _inherits(Spinner, _Component);
-
-	  function Spinner(props) {
-	    _classCallCheck(this, Spinner);
-
-	    // legacy support for width, height
-	    var _this = _possibleConstructorReturn(this, (Spinner.__proto__ || Object.getPrototypeOf(Spinner)).call(this, props));
-
-	    var _this$props = _this.props,
-	        size = _this$props.size,
-	        width = _this$props.width,
-	        height = _this$props.height;
-
-
-	    _this.start = 0;
-	    _this.end = Math.PI;
-	    _this.flip = 1;
-	    _this.size = size ? size : Math.min(width, height);
-
-	    _this.state = {
-	      animate: false,
-	      running: false
-	    };
-
-	    _this.update = _this.update.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(Spinner, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.setState({ animate: true });
-	      window.requestAnimationFrame(this.update);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.setState({ animate: false });
-	    }
-	  }, {
-	    key: 'update',
-	    value: function update() {
-	      var animate = this.state.animate;
-	      var _props = this.props,
-	          spinnerColor = _props.spinnerColor,
-	          spinnerWidth = _props.spinnerWidth;
-
-	      var c = _reactDom2.default.findDOMNode(this.refs.spinner);
-	      if (!c || !animate) return;
-
-	      if (this.start >= Math.PI || this.start < 0) {
-	        this.flip *= -1;
-	      }
-
-	      var step = FPS * this.flip;
-	      this.start = clamp(-Math.PI, Math.PI, this.start + step);
-	      this.end = clamp(Math.PI, 2 * Math.PI, this.end - step);
-
-	      var ctx = c.getContext('2d');
-	      ctx.clearRect(0, 0, this.size, this.size);
-	      ctx.beginPath();
-	      ctx.arc(this.size / 2, this.size / 2, this.size / 2 * RADIUS_PERCENT, this.start, this.end);
-	      ctx.strokeStyle = spinnerColor;
-	      ctx.lineWidth = spinnerWidth;
-	      ctx.stroke();
-
-	      window.requestAnimationFrame(this.update);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      // legacy support for show
-	      var _props2 = this.props,
-	          visible = _props2.visible,
-	          show = _props2.show;
-
-
-	      return _react2.default.createElement(
-	        'canvas',
-	        {
-	          ref: 'spinner',
-	          className: 'spinner',
-	          style: { display: visible || show ? 'block' : 'none' },
-	          width: this.size, height: this.size },
-	        'Your browser does not support HTML5 canvas elements.'
-	      );
-	    }
-	  }]);
-
-	  return Spinner;
-	}(_react.Component);
-
-	Spinner.propTypes = {
-	  size: _react.PropTypes.number,
-	  spinnerColor: _react.PropTypes.string,
-	  spinnerWidth: _react.PropTypes.number,
-	  visible: _react.PropTypes.bool
-	};
-	Spinner.defaultProps = {
-	  size: 40,
-	  spinnerColor: '#333333',
-	  spinnerWidth: 5,
-	  visible: true
-	};
-	exports.default = Spinner;
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(189);
+	var content = __webpack_require__(188);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// Prepare cssTransformation
 	var transform;
@@ -22491,7 +22419,7 @@
 	var options = {}
 	options.transform = transform
 	// add the styles to the DOM
-	var update = __webpack_require__(191)(content, options);
+	var update = __webpack_require__(190)(content, options);
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -22508,10 +22436,10 @@
 	}
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(190)(undefined);
+	exports = module.exports = __webpack_require__(189)(undefined);
 	// imports
 
 
@@ -22522,7 +22450,7 @@
 
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports) {
 
 	/*
@@ -22604,7 +22532,7 @@
 
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -22650,7 +22578,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(192);
+	var	fixUrls = __webpack_require__(191);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -22963,7 +22891,7 @@
 
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports) {
 
 	
@@ -23056,6 +22984,78 @@
 		return fixedCss;
 	};
 
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _src = __webpack_require__(3);
+
+	var _src2 = _interopRequireDefault(_src);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Render = function (_React$Component) {
+	  _inherits(Render, _React$Component);
+
+	  function Render(props) {
+	    _classCallCheck(this, Render);
+
+	    var _this = _possibleConstructorReturn(this, (Render.__proto__ || Object.getPrototypeOf(Render)).call(this, props));
+
+	    _this.state = {
+	      show: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Render, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { style: { flex: 1 } },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Render Test'
+	        ),
+	        _react2.default.createElement(_src2.default, { animate: true, spinnerColor: '#336699', visible: this.state.show, spinnerWidth: 7, size: 80 }),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: function onClick() {
+	              _this2.setState({ show: !_this2.state.show });
+	            } },
+	          'Toggle'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Render;
+	}(_react2.default.Component);
+
+	_reactDom2.default.render(_react2.default.createElement(Render, null), document.getElementById("root"));
 
 /***/ }
 /******/ ]);

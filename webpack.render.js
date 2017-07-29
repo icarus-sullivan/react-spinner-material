@@ -2,7 +2,7 @@ var path = require('path');;
 
 module.exports = {
   entry: {
-    src: ['./render.js', './src']
+    src: ['./src', './render.js']
   },
   output: {
     path: path.resolve(__dirname, 'render'),
