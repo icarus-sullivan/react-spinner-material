@@ -1,11 +1,11 @@
 {
   "name": "react-spinner-material",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "A flashy material-design inspired spinner.",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel --presets react -d lib/ src/ --copy-files",
-    "render": "webpack webpack.config.js ; webpack-dev-server --content-base render/",
+    "render": "npm run build ; webpack-dev-server",
     "prepublish": "npm run build"
   },
   "repository": {

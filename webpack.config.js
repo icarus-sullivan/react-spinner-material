@@ -22,9 +22,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'react-spinner-material',
-      template: 'template.html',
-      inject: 'body'
+      title: 'react-spinner-material'
     })
   ]
 }
