@@ -1,7 +1,7 @@
 {
   "name": "react-spinner-material",
-  "version": "1.0.17",
-  "description": "A flashy material-design inspired spinner.",
+  "version": "1.0.18",
+  "description": "A flashy material-design inspired spinner using purely css",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel --presets react -d lib/ src/ --copy-files",
@@ -17,7 +17,7 @@
     "spinner",
     "material",
     "design",
-    "canvas",
+    "css",
     "solid"
   ],
   "author": "Chris Sullivan",
