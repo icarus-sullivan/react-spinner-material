@@ -59,6 +59,9 @@ const css = `
 
 const SPINNER_ID = 'spinner_id_style';
 
+const ID_HOLDER = {};
+ID_HOLDER.id = 0;
+
 export const SpinnerMixin = (Component) => class extends React.Component {
 
   constructor(props) {
@@ -80,8 +83,9 @@ export const SpinnerMixin = (Component) => class extends React.Component {
       }
     }
 
+    ID_HOLDER.id += 1;
     this.state = {
-      id: `spinner_${Date.now()}`
+      id: `spinner_${ID_HOLDER.id}`
     };
   }
 

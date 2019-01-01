@@ -75,6 +75,7 @@ class Render extends React.Component {
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
+          <h1>PropTypes</h1>
           {this.renderHeader('size', 'The width + height of the ring')}
           <input type="number" value={size} onChange={(ev) => { 
             self.setState({ size: Number.parseInt(ev.target.value, 10)}); 
