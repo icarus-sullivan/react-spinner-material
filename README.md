@@ -1,7 +1,7 @@
 ![npm downloads total](https://img.shields.io/npm/dt/react-spinner-material.svg) ![npm version](https://img.shields.io/npm/v/react-spinner-material.svg) ![npm license](https://img.shields.io/npm/l/react-spinner-material.svg)
 
 # react-spinner-material
-A react spinner following Material UI's spinners using purely css and a higher-order-component. 
+A simple react spinner following Material UI's using only css.
 
 ![Example of Spinner](https://raw.githubusercontent.com/icarus-sullivan/react-spinner-material/master/example.gif)
 
