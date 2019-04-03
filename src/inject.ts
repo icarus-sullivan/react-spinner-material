@@ -1,4 +1,3 @@
-import React from 'react';
 
 const css = `
 .spinner {
@@ -57,40 +56,26 @@ const css = `
 }
 `;
 
-const SPINNER_ID = 'spinner_id_style';
+const ID = 'spinner_id_style';
 
-const ID_HOLDER = {};
-ID_HOLDER.id = 0;
+(() => {
+  if (!document) {
+    return;
+  }
 
-export const SpinnerMixin = (Component) => class extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    // inject styles if needed
-    if (!document.getElementById(SPINNER_ID)) {
-      const head = document.head || document.getElementsByTagName('head')[0];
-      const sprc = document.createElement('style');
-      sprc.id = SPINNER_ID;
-      sprc.type = "text/css";
-      if( sprc.styleSheet ) {
-        sprc.styleSheet.cssText = css;
-      } else {
-        sprc.appendChild(document.createTextNode(css));
-      }
-      if( head ) {
-        head.appendChild(sprc);
-      }
+  if (!document.getElementById(ID)) {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const sprc: any = document.createElement('style');
+    sprc.id = ID;
+    sprc.type = "text/css";
+    if( sprc.styleSheet ) {
+      sprc.styleSheet.cssText = css;
+    } else {
+      sprc.appendChild(document.createTextNode(css));
     }
-
-    ID_HOLDER.id += 1;
-    this.state = {
-      id: `spinner_${ID_HOLDER.id}`
-    };
+    if( head ) {
+      head.appendChild(sprc);
+    }
   }
+})();
 
-  render() {
-    return <Component {...this.props} {...this.state} />
-  }
-
-}
