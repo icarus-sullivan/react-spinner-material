@@ -7,8 +7,8 @@
     "lib/*"
   ],
   "scripts": {
-    "prepublish": "yarn build",
-    "build": "tsc -p ."
+    "prepublishOnly": "yarn build",
+    "prepare": "tsc -p ."
   },
   "repository": {
     "type": "git",
