@@ -1,16 +1,16 @@
 
 const css = `
-.spinner {
+.react-spinner-material {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   border: 10px solid #333;
   box-sizing: border-box;
-  -webkit-animation: sweep 1s linear alternate infinite, rota 0.8s linear infinite;
-          animation: sweep 1s linear alternate infinite, rota 0.8s linear infinite;
+  -webkit-animation: rsm-sweep 1s linear alternate infinite, rsm-rotate 0.8s linear infinite;
+          animation: rsm-sweep 1s linear alternate infinite, rsm-rotate 0.8s linear infinite;
 }
 
-@keyframes rota {
+@keyframes rsm-rotate {
   from {
     transform: rotate(0deg);
   }
@@ -19,7 +19,7 @@ const css = `
   }
 }
 
-@-webkit-keyframes rota {
+@-webkit-keyframes rsm-rotate {
   from {
     -webkit-transform: rotate(0deg);
   }
@@ -28,7 +28,7 @@ const css = `
   }
 }
 
-@keyframes sweep {
+@keyframes rsm-sweep {
   0% {
     -webkit-clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 50% 50%, 0% 0%, 0% 0%, 0% 0%);
     clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 50% 50%, 0% 0%, 0% 0%, 0% 0%);
@@ -43,7 +43,7 @@ const css = `
   }
 }
 
-@-webkit-keyframes sweep {
+@-webkit-keyframes rsm-sweep {
   0% {
     -webkit-clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 50% 50%, 0% 0%, 0% 0%, 0% 0%);
   }

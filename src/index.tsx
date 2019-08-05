@@ -11,19 +11,17 @@ interface Props {
 }
 
 const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, size = 40, ...rest }: Props) => 
-  !visible 
-    ? null
-    : (
-      <div
-        {...rest}
-        className="spinner"
-        style={{
-            width: size,
-            height: size,
-            borderColor: spinnerColor,
-            borderWidth: spinnerWidth
-        }} 
-      />
-    );
+  visible && (
+    <div
+      {...rest}
+      className="react-spinner-material"
+      style={{
+          width: size,
+          height: size,
+          borderColor: spinnerColor,
+          borderWidth: spinnerWidth
+      }} 
+    />
+  );
 
 export default Spinner;
