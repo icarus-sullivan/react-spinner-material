@@ -10,8 +10,12 @@ interface Props {
   [key: string]: any
 }
 
-const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, size = 40, ...rest }: Props) => 
-  visible && (
+const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, size = 40, ...rest }: Props) => {
+  if (!visible) {
+    return null;
+  }
+
+  return (
     <div
       {...rest}
       className="react-spinner-material"
@@ -23,5 +27,6 @@ const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, s
       }} 
     />
   );
+}
 
 export default Spinner;
