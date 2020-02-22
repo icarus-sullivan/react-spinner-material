@@ -24,9 +24,6 @@
   ],
   "author": "Chris Sullivan",
   "license": "Unlicense",
-  "peerDependencies": {
-    "react": "^15.6.1"
-  },
   "devDependencies": {
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
