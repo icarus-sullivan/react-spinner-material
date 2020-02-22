@@ -27,6 +27,11 @@ csstype@^2.2.0:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.3.tgz#b701e5968245bf9b08d54ac83d00b624e622a9fa"
   integrity sha512-rINUZXOkcBmoHWEyu7JdHu5JMzkGRoMX4ov9830WNgxf5UYxcBUO0QTKAqeJ5EZfSdlrcJYkC8WwfVW7JYi4yg==
 
+spinner-material@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/spinner-material/-/spinner-material-1.0.0.tgz#10e6914caf5f52080bb39b49ecb3e91e638e238e"
+  integrity sha512-vmlgEbVFbfvcKDUOFWCwpksO4mBXHxlooeKp/EAbhAb66s4nn9Ftv2ORCtLt3X/mbeJ46u3bl3HW7bxghsAwGw==
+
 typescript@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"

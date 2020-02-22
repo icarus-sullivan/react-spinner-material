@@ -1,13 +1,12 @@
 {
   "name": "react-spinner-material",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "A flashy material-design inspired spinner using purely css",
   "main": "lib/index.js",
   "files": [
     "lib/*"
   ],
   "scripts": {
-    "prepublishOnly": "yarn build",
     "prepare": "tsc -p ."
   },
   "repository": {
@@ -28,5 +27,8 @@
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "spinner-material": "^1.0.0"
   }
 }
