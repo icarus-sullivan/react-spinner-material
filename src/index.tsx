@@ -3,14 +3,14 @@ import * as React from 'react';
 import './inject';
 
 interface Props {
-  size: number,
-  spinnerColor: string,
-  spinnerWidth: number,
+  radius: number,
+  color: string,
+  stroke: number,
   visible: boolean,
   [key: string]: any
 }
 
-const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, size = 40, ...rest }: Props) => {
+const Spinner = ({ visible = true, color = '#333333', stroke = 5, radius = 40, ...rest }: Props) => {
   if (!visible) {
     return null;
   }
@@ -20,10 +20,10 @@ const Spinner = ({ visible = true, spinnerColor = '#333333', spinnerWidth = 5, s
       {...rest}
       className="react-spinner-material"
       style={{
-          width: size,
-          height: size,
-          borderColor: spinnerColor,
-          borderWidth: spinnerWidth
+          width: radius,
+          height: radius,
+          borderColor: color,
+          borderWidth: stroke
       }} 
     />
   );

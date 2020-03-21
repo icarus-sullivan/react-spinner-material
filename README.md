@@ -17,9 +17,9 @@ yarn add react-spinner-material
 ### PropTypes
 |Name|Type|Default|Description|
 |-----|-----|-----|-----|
-|size |Number |40 |The width and height of the spinner |
-|spinnerColor |String |#333333 |The color of the spinner |
-|spinnerWidth |Number |5 |The width of the spinner's circle |
+|radius |Number |40 |The radius of the spinner |
+|color |String |#333333 |The color of the spinner |
+|stroke |Number |5 |The spinner's stroke width |
 |visible|Boolean |true |Whether to show the spinner or not|
 
 ### Usage
@@ -32,10 +32,16 @@ export default class Example extends Component {
   render() {
   return (
       <div>
-        <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={true} />
+        <Spinner radius={120} color={"#333"} stroke={2} visible={true} />
       </div>
     );
   }
 }
 ```
 
+### Changelog
+
+**1.2.0**
+
+- Now uses abstraction [`spinner-material`](https://www.npmjs.com/package/spinner-material) internally
+- Changed prop types to be more indicative of what they do
