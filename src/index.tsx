@@ -3,9 +3,9 @@ import * as React from 'react';
 import './inject';
 
 interface Props {
-  radius: number,
+  radius: number | string,
   color: string,
-  stroke: number,
+  stroke: number | string,
   visible: boolean,
   [key: string]: any
 }
