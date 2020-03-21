@@ -41,7 +41,5 @@ export default class Example extends Component {
 
 ### Changelog
 
-**1.2.0**
-
-- Now uses abstraction [`spinner-material`](https://www.npmjs.com/package/spinner-material) internally
-- Changed prop types to be more indicative of what they do
+**1.3.0**
+- Reverting 1.2.0 commits to support IE :(
