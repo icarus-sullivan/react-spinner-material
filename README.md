@@ -41,5 +41,8 @@ export default class Example extends Component {
 
 ### Changelog
 
+**1.3.1**
+- @pedroalmeida415 PR regarding SSR support
+
 **1.3.0**
 - Reverting 1.2.0 commits to support IE :(

@@ -59,7 +59,7 @@ const css = `
 const ID = 'spinner_id_style';
 
 (() => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return;
   }
 
