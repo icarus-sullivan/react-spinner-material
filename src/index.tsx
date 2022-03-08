@@ -2,15 +2,14 @@ import * as React from 'react';
 
 import './inject';
 
-interface Props {
+interface Props extends React.HTMLProps<HTMLDivElement> {
   radius?: number | string,
   color?: string,
   stroke?: number | string,
-  visible?: boolean,
-  [key: string]: any
+  visible?: boolean
 }
 
-const Spinner = ({ visible = true, color = '#333333', stroke = 5, radius = 40, ...rest }: Props) => {
+const Spinner = ({ visible = true, color = '#333333', stroke = 5, radius = 40, className, style, ...rest }: Props) => {
   if (!visible) {
     return null;
   }
@@ -18,13 +17,14 @@ const Spinner = ({ visible = true, color = '#333333', stroke = 5, radius = 40, .
   return (
     <div
       {...rest}
-      className="react-spinner-material"
+      className={['react-spinner-material', className].join(' ')}
       style={{
           width: radius,
           height: radius,
           borderColor: color,
-          borderWidth: stroke
-      }} 
+          borderWidth: stroke,
+          ...style
+      }}
     />
   );
 }
