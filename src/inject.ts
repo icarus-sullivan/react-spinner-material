@@ -1,3 +1,5 @@
+
+const css = `
 .react-spinner-material {
   width: 80px;
   height: 80px;
@@ -52,3 +54,28 @@
     -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 50% 50%, 100% 100%, 100% 0%, 0% 0%);
   }
 }
+`;
+
+const ID = 'spinner_id_style';
+
+(() => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (!document.getElementById(ID)) {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const sprc: any = document.createElement('style');
+    sprc.id = ID;
+    sprc.type = "text/css";
+    if( sprc.styleSheet ) {
+      sprc.styleSheet.cssText = css;
+    } else {
+      sprc.appendChild(document.createTextNode(css));
+    }
+    if( head ) {
+      head.appendChild(sprc);
+    }
+  }
+})();
+

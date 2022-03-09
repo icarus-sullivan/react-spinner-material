@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './style.scss';
+import './inject';
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
   radius?: number | string,
