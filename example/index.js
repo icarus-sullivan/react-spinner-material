@@ -53,6 +53,9 @@ const Render = () => {
           <h1>Display</h1>
           <Spinner stroke={stroke} color={color} radius={radius} visible={visible} />
         </div>
+        <div>
+          <Spinner stroke={5} color={'red'} radius={40} visible={true} />
+        </div>
       </div>
   )
 };
